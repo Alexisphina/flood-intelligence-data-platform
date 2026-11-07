@@ -205,6 +205,7 @@ class HistoricalReadingIngestor:
         start_date: str,
         end_date: str,
         limit: int = 10000,
+        batch_run_id: str | None = None,
     ) -> dict[str, Any]:
         """
         Run the complete historical ingestion process for one station.
@@ -266,6 +267,7 @@ class HistoricalReadingIngestor:
             # Metadata provides lineage and audit information
             # alongside the raw readings.
             metadata = {
+                "batch_run_id": batch_run_id,
                 "pipeline_run_id": pipeline_run_id,
                 "ingestion_timestamp": ingestion_timestamp,
                 "source_system": (
@@ -362,6 +364,7 @@ class HistoricalReadingIngestor:
                 pipeline_run_id=pipeline_run_id,
                 status="SUCCESS",
                 details={
+                    "batch_run_id": batch_run_id,
                     "station_reference": station_reference,
                     "requested_start_date": start_date,
                     "requested_end_date": end_date,
@@ -374,6 +377,7 @@ class HistoricalReadingIngestor:
 
             # Return useful information to the caller/orchestrator.
             return {
+                "batch_run_id": batch_run_id,
                 "pipeline_run_id": pipeline_run_id,
                 "ingestion_timestamp": ingestion_timestamp,
                 "station_reference": station_reference,
@@ -418,6 +422,7 @@ class HistoricalReadingIngestor:
                 pipeline_run_id=pipeline_run_id,
                 status="FAILED",
                 details={
+                    "batch_run_id": batch_run_id,
                     "station_reference": station_reference,
                     "requested_start_date": start_date,
                     "requested_end_date": end_date,

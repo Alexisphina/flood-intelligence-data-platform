@@ -49,3 +49,49 @@ class FloodMonitoringAPIClient:
         response.raise_for_status()
 
         return response.json()
+
+    def get_station_readings(
+        self,
+        station_reference: str,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        reading_date: str | None = None,
+        today: bool = False,
+        limit: int = 10000,
+    ) -> dict[str, Any]:
+
+        url = (
+            f"{BASE_URL}/id/stations/"
+            f"{station_reference}/readings"
+        )
+
+        params = {
+            "_limit": limit,
+        }
+
+        if today:
+            params["today"] = ""
+
+        if reading_date:
+            params["date"] = reading_date
+
+        if start_date:
+            params["startdate"] = start_date
+
+        if end_date:
+            params["enddate"] = end_date
+
+        logger.info(
+            "Requesting readings for station %s",
+            station_reference,
+        )
+
+        response = self.session.get(
+            url,
+            params=params,
+            timeout=self.timeout,
+        )
+
+        response.raise_for_status()
+
+        return response.json()

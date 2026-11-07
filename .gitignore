@@ -1,10 +1,42 @@
+# Python environments
 .venv/
+venv/
+
+# Python cache and testing
 __pycache__/
 *.pyc
-.env
 .pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# macOS
 .DS_Store
 
+# Generated pipeline data
 data/raw/*
 data/processed/*
 data/rejected/*
+data/audit/*
+*.parquet
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# Submission archives
+flood-monitoring-pipeline-submission-*.zip
+submission_pack/
+
+# Local backup files
+*.backup
+
+# Private assessment documentation
+ASSESSMENT_ANSWERS.md
